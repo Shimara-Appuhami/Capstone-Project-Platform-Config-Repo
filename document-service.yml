@@ -1,0 +1,33 @@
+server:
+  port: ${SERVER_PORT:8083}
+
+spring:
+  datasource:
+    url: ${DOCUMENT_DB_URL:jdbc:mysql://localhost:3306/document_service_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DOCUMENT_DB_USERNAME:root}
+    password: ${DOCUMENT_DB_PASSWORD:harshima@123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  storage:
+    mode: ${STORAGE_MODE:local}
+    bucket: ${GCS_BUCKET:eca-final-project-media}
+    local-directory: ${LOCAL_MEDIA_DIR:uploads}
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
+
+info:
+  app:
+    name: Document Service
+    description: Uploads student documents to Google Cloud Storage and stores metadata in MySQL
+

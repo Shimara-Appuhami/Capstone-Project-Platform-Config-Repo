@@ -1,0 +1,26 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  datasource:
+    url: ${STUDENT_DB_URL:jdbc:mysql://localhost:3306/student_service_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${STUDENT_DB_USERNAME:root}
+    password: ${STUDENT_DB_PASSWORD:harshima@123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
+
+info:
+  app:
+    name: Student Service
+    description: Manages student profiles and enrollment records in MySQL

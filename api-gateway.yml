@@ -1,0 +1,56 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  cloud:
+    config:
+      import-check:
+        enabled: false
+    gateway:
+      routes:
+        - id: student-service-root
+          uri: lb://student-service
+          predicates:
+            - Path=/api/students
+        - id: student-service
+          uri: lb://student-service
+          predicates:
+            - Path=/api/students/**
+        - id: subject-service-root
+          uri: lb://subject-service
+          predicates:
+            - Path=/api/subjects
+        - id: subject-service
+          uri: lb://subject-service
+          predicates:
+            - Path=/api/subjects/**
+        - id: document-service-root
+          uri: lb://document-service
+          predicates:
+            - Path=/api/documents
+        - id: document-service
+          uri: lb://document-service
+          predicates:
+            - Path=/api/documents/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: ${FRONTEND_ALLOWED_ORIGIN:http://localhost:3000}
+            allowedOriginPatterns:
+              - ${FRONTEND_ALLOWED_ORIGIN_PATTERN:http://localhost:*}
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            exposedHeaders:
+              - Content-Disposition
+
+info:
+  app:
+    name: API Gateway
+    description: Routes requests to student management services
